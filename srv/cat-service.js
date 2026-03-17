@@ -1,5 +1,5 @@
 const cds = require('@sap/cds')
-const { INSERT, UPDATE } = require('@sap/cds/lib/ql/cds-ql')
+const { INSERT, UPDATE, DELETE } = require('@sap/cds/lib/ql/cds-ql')
 
 module.exports = class TodotaskHandler extends cds.ApplicationService {
 
@@ -26,20 +26,46 @@ module.exports = class TodotaskHandler extends cds.ApplicationService {
         })
 
         // ✅ COMPLETE TASK (MOVE HERE)
-        this.on('completeTask', async (req) => {
+        // this.on('completeTask', async (req) => {
 
-            const { ID } = req.data
+        //     const { ID } = req.data
 
-            console.log("ID:", ID)   // 🔍 debug
+        //     console.log("ID:", ID)   // 🔍 debug
 
-            await UPDATE(todotask)
-                .set({ status: 'Completed' })
+        //     await UPDATE(todotask)
+        //         .set({ status: 'Completed' })
+        //         .where({ ID })
+
+        //     req.notify('Task completed')
+
+        //     return { ID }
+        // })
+        this.on('completeTask',todotask,async(req)=>{
+
+           const ID=req.params[0].ID;
+           const { status}=req.data;
+           console.log(ID);
+           console.log(status);
+
+           await UPDATE(todotask)
+            .set( {status})
+            .where({ID})
+            req.notify("status is updated") 
+        })
+
+        this.on('deleteTask', async (req) => {
+            const {ID} = req.data
+            console.log(ID);
+
+
+            await DELETE.from(todotask)
                 .where({ ID })
 
-            req.notify('Task completed')
+            req.notify("task is deleted ")
 
             return { ID }
         })
+
 
         return super.init()
     }

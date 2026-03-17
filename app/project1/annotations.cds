@@ -42,7 +42,7 @@ annotate service.todotask with @(
         {
             $Type : 'UI.DataFieldForAction',
             Action : 'TodotaskHandler.completeTask',
-            Label : 'completeTask',
+            Label : '{i18n>UpdateStatus}',
         },
         {
             $Type : 'UI.DataFieldForAction',

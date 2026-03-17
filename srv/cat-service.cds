@@ -2,7 +2,7 @@ using { todotask as db } from '../db/schema';
 
 service TodotaskHandler {
     entity todotask as projection on db.Tasks actions{
-        action completeTask(ID:UUID);
+        action completeTask(status:String(260));
         action deleteTask(ID:UUID);  
     };
 
